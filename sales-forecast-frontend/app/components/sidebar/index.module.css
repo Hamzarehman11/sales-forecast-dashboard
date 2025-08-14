@@ -1,0 +1,8 @@
+.sidebar{
+    background-color: #212529;
+    height: 95vh;
+    width: 280px;
+    border-radius: 15px 0 0 15px;
+    color: #fff;
+    padding: 1rem;
+}

@@ -1,0 +1,106 @@
+.select {
+  width: 150px;
+  cursor: pointer;
+  position: relative; /* positioning context for the menu */
+  transition: 300ms;
+  color: white;
+  /* overflow: hidden; */ /* remove this so the menu can overflow */
+}
+
+.selected {
+  background-color: #2a2f3b;
+  padding: 5px;
+  margin-bottom: 3px;
+  border-radius: 5px;
+  position: relative;
+  z-index: 2; /* stays above page, below menu if needed */
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.arrow {
+  position: relative;
+  right: 0;
+  height: 10px;
+  transform: rotate(-90deg);
+  width: 25px;
+  fill: white;
+  z-index: 2;
+  transition: 300ms;
+}
+
+/* OVERLAY MENU */
+.options {
+  position: absolute; /* take out of document flow */
+  top: calc(100% + 4px); /* sit just under the selected */
+  left: 0;
+  width: 100%;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: #2a2f3b;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  z-index: 9999; /* overlay above other content */
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none; /* prevent hover when closed */
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+/* Open on hover (or toggle class in React) */
+.select:hover > .options,
+.select.open > .options {
+  /* optional: add .open via JS/state */
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.select:hover > .selected .arrow,
+.select.open > .selected .arrow {
+  transform: rotate(0deg);
+}
+
+.option {
+  border-radius: 5px;
+  padding: 5px;
+  transition: 300ms;
+  background-color: #2a2f3b;
+  width: 100%;
+  font-size: 15px;
+}
+.option:hover {
+  background-color: #323741;
+}
+
+.options input[type="radio"] {
+  display: none;
+}
+.options label {
+  display: inline-block;
+  width: 100%;
+}
+.options label::before {
+  content: attr(data-txt);
+}
+
+/* Keep your selected-text rules if you still use the CSS-only approach */
+.options input[type="radio"]:checked + label {
+  display: none;
+}
+.options input[type="radio"]#all:checked + label {
+  display: none;
+}
+.select:has(.options input[type="radio"]#all:checked) .selected::before {
+  content: attr(data-default);
+}
+.select:has(.options input[type="radio"]#option-1:checked) .selected::before {
+  content: attr(data-one);
+}
+.select:has(.options input[type="radio"]#option-2:checked) .selected::before {
+  content: attr(data-two);
+}
+.select:has(.options input[type="radio"]#option-3:checked) .selected::before {
+  content: attr(data-three);
+}
